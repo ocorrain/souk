@@ -1,0 +1,8 @@
+*.fasl
+*~
+__db.*
+%ELEPHANT
+%ELEPHANTDUP
+%ELEPHANTOID
+log.*
+*.jpg
