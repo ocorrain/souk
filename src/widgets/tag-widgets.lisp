@@ -16,6 +16,7 @@
   object.  Doing any of these actions will cause the widget to be
   redrawn."))
 
+
 (defmethod render-widget-body ((obj tags) &rest args)
   (declare (ignore args))
   (with-slots (tag-object) obj
@@ -24,10 +25,10 @@
 	(:p (:b "Click a tag to remove it: ")
 	    (:ul (dolist (tag (tags tag-object))
 		   (htm (:li (render-link (lambda (&rest args)
-				  (declare (ignore args))
-				  (setf (tags tag-object) (remove tag (tags tag-object)))
-				  (mark-dirty obj))
-				(tag-name tag)))))))))
+					    (declare (ignore args))
+					    (setf (tags tag-object) (remove tag (tags tag-object)))
+					    (mark-dirty obj))
+					  (tag-name tag)))))))))
     (with-html-form (:get (make-action (lambda (&key newtag action)
 					 (declare (ignore action))
     					 (if (find-tag-by-name newtag)
@@ -44,10 +45,10 @@
 						  (member tag (tags tag-object) :test #'equalp))
 						(find-persistent-objects (class-store 'tag) 'tag)))
 			  (htm (:li (render-link (lambda (&rest args)
-					 (declare (ignore args))
-					 (push tag (tags tag-object))
-					 (mark-dirty obj))
-				       (tag-name tag))))))))))
+						   (declare (ignore args))
+						   (push tag (tags tag-object))
+						   (mark-dirty obj))
+						 (tag-name tag))))))))))
 
 
 (defwidget control-tabs ()
@@ -68,3 +69,37 @@
 	 (htm ((:div :id (format nil "~A" (attributize-name (car tab))))
 	       (render-widget (cdr tab))))))
     (send-script (format nil "new Control.Tabs('~A');" tabs-dom-id))))
+
+(defwidget tagged-objects-grid (datagrid)
+  ((tag :initarg :tag :initform nil :accessor tag)))
+
+;; (defmethod render-widget-body ((obj tagged-objects-grid) &rest args)
+;;   (declare (ignore args))
+;;   (with-slots (tag) obj
+;;     () (let ((grid ))
+;;       grid)))
+
+(defun make-tag-grid (tag)
+  (make-instance 'widget
+		 :children
+		 (list (make-shopping-cart-widget :short)
+		  ;; (make-instance 'breadcrumbs)
+		  (make-instance 'tagged-objects-grid
+				 :name 'single-item-display
+				 :tag tag
+				 :data-class 'single-item
+				 :view 'single-item-display-view
+				 :on-query #'get-tagged-single-objects))))
+
+
+
+(defun make-tags-navigation ()
+  (let* ((menu-tags (all-menu-tags))
+	 (tag-names (mapcar #'tag-name menu-tags))
+	 (tag-urls (mapcar #'attributize-name tag-names))
+	 (tag-widgets (mapcar #'make-tag-grid menu-tags)))
+    (apply #'init-navigation (make-instance 'lazy-navigation)
+	   (mapcar #'list tag-names tag-widgets tag-urls))))
+
+
+

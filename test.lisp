@@ -45,18 +45,18 @@
   (if (zerop (random 2))
       nil t))
 
-(defun test-provision-store (pathname number-of-items number-of-tags images-per-item)
-  (new-web-store (random-words 4)
-		 (random-letters 3)
-		 (random-letters 3)
-		 (dirconcat pathname
-			    (get-webform (random-words 1))))
-  (provision-items-test number-of-items)
-  (provision-tags-test number-of-tags)
-  (let ((items (ele:get-instances-by-class 'single-item))
-	(tags (all-tags)))
-    (provision-images-test items images-per-item)
-    (tag-items-test items tags)))
+;; (defun test-provision-store (pathname number-of-items number-of-tags images-per-item)
+;;   (new-web-store (random-words 4)
+;; 		 (random-letters 3)
+;; 		 (random-letters 3)
+;; 		 (dirconcat pathname
+;; 			    (get-webform (random-words 1))))
+;;   (provision-items-test number-of-items)
+;;   (provision-tags-test number-of-tags)
+;;   (let ((items (ele:get-instances-by-class 'single-item))
+;; 	(tags (all-tags)))
+;;     (provision-images-test items images-per-item)
+;;     (tag-items-test items tags)))
 
 
 
@@ -69,8 +69,8 @@
 
 (defun provision-tags-test (number)
   (dotimes (i number)
-    (let ((tag (make-instance 'tag :name (random-words 3))))
-      (format t "~&Provisioned ~A, webform ~A~%" (tag-name tag) (webform tag)))))
+    (let ((tag (make-instance 'tag :name (random-words 2))))
+      (format t "~&Provisioned ~A~%" (tag-name tag)))))
 
 (defun provision-images-test (items number-per-item)
   (dolist (i items)
@@ -81,7 +81,7 @@
 (defun tag-items-test (items tags)
   (dolist (i items)
     (let ((tag (random-elt tags)))
-      (tag-item i tag)
+      (push tag (tags i))
       (format t "~&Tagged ~A with ~A~&" (title i) (tag-name tag)))))
 
 

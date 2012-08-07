@@ -1,7 +1,7 @@
 
 .menu
 {
-  width: 15em;
+  /* width: 15em; */
 /*  background: #d8eaf8 url(/weblocks-common/pub/images/menu/top_background.png) repeat-x;*/
 }
 
@@ -23,7 +23,7 @@
 
 .empty-menu
 {
-  padding-left: 0.5em;
+  /* padding-left: 0.5em; */
 }
 
 .selected-item
@@ -32,20 +32,27 @@
   background-color: #bfd9ec;
 }
 
+.menu ul {
+    /* border: 10px solid; */
+    display: block;
+}
 .menu ul li
 {
-  padding-left: 0;
+    display: inline;
+    /* padding-left: 0; */
+    list-style-type: none;
 }
+
 
 .menu ul li.selected-item
 {
-  padding-left: 0.5em;
+  /* padding-left: 0.5em; */
 }
 
 .menu ul li.selected-item span.label
 {
 /*  background: url(/weblocks-common/pub/images/menu/arrow.png) no-repeat center left;*/
-  padding-left: 1em;
+  /* padding-left: 1em; */
 }
 
 .menu h1, .view .empty-menu, .menu ul li
@@ -76,10 +83,10 @@
 /*  background: url(/weblocks-common/pub/images/menu/bottom_right.png) no-repeat top right;*/
 }
 
-.menu a
-{
-  display: block;
-}
+/* .menu a */
+/* { */
+/*   display: block; */
+/* } */
 
 /* IE 6 and 7 hover hack */
 *:first-child+html {} * html {} .menu a

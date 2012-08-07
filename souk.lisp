@@ -30,8 +30,18 @@
 
 (defwebapp souk
     :prefix "/"
-    :description "souk: A new application"
+    :description "souk: a bazaar application"
     :init-user-session 'souk::init-user-session
+    :autostart nil                   ;; have to start the app manually
+    :dependencies (append (get-js-dependencies)
+			  (get-dependencies 'stylesheet-dependency #p"pub/stylesheets/souk.css"))
+    :ignore-default-dependencies nil ;; accept the defaults
+    :debug t)
+
+(defwebapp souk-admin
+    :prefix "/admin"
+    :description "souk-admin: administering souk"
+    :init-user-session 'souk::init-admin-session
     :autostart nil                   ;; have to start the app manually
     :dependencies (append (get-js-dependencies)
 			  (get-dependencies 'stylesheet-dependency #p"pub/stylesheets/souk.css"))
@@ -62,10 +72,12 @@
 arguments."
   (apply #'start-weblocks args)
   (start-webapp 'souk)
+  (start-webapp 'souk-admin)
   (get-souk-configuration))
 
 (defun stop-souk ()
   "Stops the application by calling 'stop-weblocks'."
   (stop-webapp 'souk)
+  (stop-webapp 'souk-admin)
   (stop-weblocks))
 

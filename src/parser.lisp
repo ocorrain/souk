@@ -32,3 +32,6 @@
 		     result)))
 	(values arg1 list-of-objects list-of-objects)))))
 
+
+(defun as-string (thing)
+  (format nil "~A" thing))

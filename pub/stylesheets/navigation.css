@@ -1,8 +1,8 @@
 
 .menu
 {
-  width: 15em;
-/*  background: #d8eaf8 url(/weblocks-common/pub/images/widget/menu/top_background.png) repeat-x;*/
+  /* width: 15em; */
+ background: #d8eaf8 url(/weblocks-common/pub/images/widget/menu/top_background.png) repeat-x;
 }
 
 .menu h1
@@ -12,18 +12,18 @@
 
 .menu .extra-top-1
 {
-/*  background: url(/weblocks-common/pub/images/widget/menu/top_left.png) no-repeat top left;*/
+  /* background: url(/weblocks-common/pub/images/widget/menu/top_left.png) no-repeat top left; */
 }
 
 .menu .extra-top-2
 {
-/*  background: url(/weblocks-common/pub/images/widget/menu/top_right.png) no-repeat top right;*/
+ /* background: url(/weblocks-common/pub/images/widget/menu/top_right.png) no-repeat top right; */
   border-bottom-color: #bfd9ec;
 }
 
 .empty-navigation
 {
-  padding-left: 0.5em;
+  /* padding-left: 0.5em; */
 }
 
 .selected-item
@@ -34,18 +34,20 @@
 
 .menu ul li
 {
-  padding-left: 0;
+    padding-left: 0;
+    display: inline;
+    list-style-type: none;
 }
 
 .menu ul li.selected-item
 {
-  padding-left: 0.5em;
+  /* padding-left: 0.5em; */
 }
 
 .menu ul li.selected-item span
 {
 /*  background: url(/weblocks-common/pub/images/widget/menu/arrow.png) no-repeat center left;*/
-  padding-left: 1em;
+  /* padding-left: 1em; */
 }
 
 .menu h1, .view .empty-navigation, .menu ul li

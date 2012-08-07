@@ -2,7 +2,7 @@
 
 (defpclass provider (quantity-list)
   ((name :initarg :name :accessor name :type string :initform "")
-   (geography :accessor geography :type geography :initform nil)))
+   (geographies :accessor geographies :type list :initform nil)))
 
 (defmethod add-postage (weight-limit price (provider provider))
   (add-item price provider weight-limit))

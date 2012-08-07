@@ -36,3 +36,29 @@
 #root ul.subsection_tabs li.source_code {
 	float:right;
 }
+ 
+/* Tag cloud stuff */
+
+ul.tag-cloud {
+    margin: 1em;
+    padding: 1em;
+    display: block;
+}
+
+ul.tag-cloud li {
+    display: inline;
+    list-style-type: none;
+    
+}
+
+ul.tag-cloud a {
+    display: block;
+    float: left;
+    margin: 2px 5px;
+    padding: 2px;
+    text-decoration: none;
+}
+
+a.tag-cloud-selected {
+    background-color: #dbeac1;
+}

@@ -2,23 +2,23 @@ body
 {
 /*  background: url(/weblocks-common/pub/images/page/background.png);*/
   text-align: center;
-  background: #001D23;
+  /* background: #001D23; */
 }
 
 div.page-wrapper
 {
-  max-width: 90%;
-  min-width: 60em;
+  /* max-width: 90%; */
+  /* min-width: 60em; */
 
   margin: 0 auto;
   text-align: left;
 }
 
-/* IE 6 specific hacks (has layout and min-width)*/
-* html div.page-wrapper
-{
-  width: 70em;
-}
+/* /\* IE 6 specific hacks (has layout and min-width)*\/ */
+/* * html div.page-wrapper */
+/* { */
+/*   width: 70em; */
+/* } */
 
 .page-wrapper .page-extra-top-1,
 .dialog .dialog-extra-top-1
@@ -50,13 +50,13 @@ div.page-wrapper
 
 div#root, .dialog-body, .dialog h1
 {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  /* border-left: 1px solid black; */
+  /* border-right: 1px solid black; */
 }
 
 div#root
 {
-  padding: 3em;
+  /* padding: 3em; */
   min-height: 60em;
   background-color: white;
 }
