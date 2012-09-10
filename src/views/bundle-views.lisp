@@ -1,0 +1,55 @@
+(in-package #:souk)
+
+
+
+(defview bundle-view (:type table :inherit-from '(:scaffold bundle))
+  (id :hidep t)
+  (tags :hidep t)
+  (meta :hidep t)
+  (long-description :hidep t)
+  (images :hidep t)
+  (stock-counter-started-at :hidep t)
+  (items :hidep t)
+  (image-counter :hidep t)
+  (geographies :reader #'print-geographies))
+
+(defview bundle-items-view
+    (:type table :inherit-from '(:scaffold single-item))
+  (id :hidep t)
+  (tags :hidep t)
+  (meta :hidep t)
+  (short-description :hidep t)
+  (featured :hidep t)
+  (published :hidep t)
+  (long-description :hidep t)
+  (stock-counter-started-at :hidep t)
+  (image-counter :hidep t)
+  (images :hidep t)
+  (stock/week :hidep t)
+  (geographies :reader #'print-geographies)
+  (stock-counter-current-value :hidep t))
+
+(defview bundle-data-view
+    (:type data :inherit-from '(:scaffold bundle)))
+
+(defview bundle-form-view
+    (:type form :inherit-from '(:scaffold bundle))
+  (id :hidep t)
+  (sku :hidep t)
+  (meta :hidep t)
+  (images :hidep t)
+  (image-counter :hidep t)
+  (tags :hidep t)
+  (short-description :present-as (textarea :rows 1)
+		     :requiredp t)
+  (long-description :present-as (textarea :rows 5)
+		    :requiredp t)
+  (stock-counter-started-at :hidep t)
+  (geographies :hidep t)
+  (items :hidep t)
+  (geographies :reader (lambda (item)
+  			 (mapcar (alexandria:compose #'as-string #'object-id)
+  				 (geographies item)))
+  	       :present-as (checkboxes :choices #'all-geographies
+  				       :label-key #'geo-name)
+  	       :parse-as (object-ids :class-name 'geography)))

@@ -1,0 +1,17 @@
+
+* TODO Shopping cart wizard
+  :LOGBOOK:
+  - State "TODO"       from "DONE"       [2012-05-16 Wed 15:38]
+  - State "DONE"       from ""           [2012-05-16 Wed 15:38]
+  :END:
+
+
+* TODO Continent-based geography selector
+  :LOGBOOK:
+  - State "TODO"       from ""           [2012-05-16 Wed 15:38]
+  :END:
+
+* TODO Qlist form widget
+
+* TODO Display grid widget
+Inherit from static selector?

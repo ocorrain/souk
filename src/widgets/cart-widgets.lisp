@@ -46,9 +46,11 @@
 					   (setf (display-mode obj) :full)))
 			    "View cart")
 	       (fmt " | ")
-	       (render-link (make-action (lambda (&rest args)
-					   (declare (ignore args))))
-			    "Check out"))))
+	       ((:a :href "/checkout")
+		"Check out");;  (render-link (make-action (lambda (&rest args)
+			    ;; 		   (declare (ignore args))))
+			    ;; )
+		)))
 
 (defmacro with-cart (&body body)
   `(let ((cart (get-or-initialize-cart)))
@@ -80,12 +82,14 @@
 					     (setf (display-mode obj) :short)))
 			      "Collapse")
 		 (fmt " | ")
-		 (render-link (make-action (lambda (&rest args)
-					     (declare (ignore args))
-					     (setf (widget-parent obj)
-						   (make-checkout-widget))
-					     (mark-dirty (widget-parent obj))))
-			      "Check out"))))))
+		 (htm ((:a :href "/checkout")
+		       "Check out"));; (render-link (make-action (lambda (&rest args)
+			    ;; 		     (declare (ignore args))
+			    ;; 		     (setf (widget-parent obj)
+			    ;; 			   (make-checkout-widget))
+			    ;; 		     (mark-dirty (widget-parent obj))))
+			    ;;   "Check out")
+		)))))
 
 (defwidget checkout-widget (shopping-cart-widget)
   ((customer :accessor customer :initarg :customer)))
@@ -95,10 +99,6 @@
   (with-html
     (:h1 "Checkout!")
     (render-shopping-cart obj :full)))
-
-
-
-
 
 (defun make-shopping-cart-widget (mode)
   (make-instance 'shopping-cart-widget
@@ -129,8 +129,44 @@
   ;; 		 :data (list (get-or-initialize-cart)
   ;; 			     (make-instance 'customer))
   ;; 		 :on-complete 'checkout-complete-function)
-  (make-quickform (make-cart-view (get-or-initialize-cart)))
-  )
+  (let ((cart (get-or-initialize-cart))
+	(customer (get-or-initialize-customer)))
+    ;; (make-quickform (make-cart-view cart)
+    ;; 		    :data cart
+    ;; 		    :on-success (lambda (w o)
+    ;; 				  (describe o *weblocks-output-stream*)
+    ;; 				  (describe (dataform-data w) *weblocks-output-stream*)))
+    ;; (make-instance 'quantity-list-widget
+    ;; 						:qlist cart
+    ;; 						:q-item-render-fn
+    ;; 						(lambda (item)
+    ;; 						  (list (title (qlist-entry-item item))))
+    ;; 						:q-item-add-p t
+    ;; 						:q-item-delete-p t)
+    (make-druid (lambda () "Hello")
+		(make-instance 'druid-entry
+			       :data cart
+			       :edit-function
+			       (lambda (data)
+				 (make-instance 'quantity-list-widget
+						:qlist data
+						:q-item-render-fn
+						(lambda (item)
+						  (list (title (qlist-entry-item item))))
+						:q-item-add-p t
+						:q-item-delete-p t))
+			       :validate-function (constantly t)
+			       :summary-function #'dump-description)
+		(make-instance 'druid-entry
+			       :data customer
+			       :edit-function
+			       (lambda (data)
+				 (make-quickform 'customer-view :data data))
+			       :validate-function (constantly t)
+			       :summary-function #'dump-description))))
+
+
+
 
 
 (defmethod wizard-form-view ((wizard checkout) (data shopping-cart) (step (eql 1)))

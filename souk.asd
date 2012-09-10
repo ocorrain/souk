@@ -57,7 +57,8 @@
 					     (:file "tag-widgets" :depends-on ("tag-cloud"))
 					     (:file "qlist-widget")
 					     (:file "geography-widgets" :depends-on ("tag-cloud"))
-					     (:file "tag-cloud"))
+					     (:file "tag-cloud")
+					     (:file "druid"))
 				:depends-on ("images" presentations))
 			       (:file "images"
 				      :depends-on (models))

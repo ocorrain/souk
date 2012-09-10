@@ -1,0 +1,123 @@
+
+* View protocol
+** Class VIEW
+  - inherit-from :: "A view to inherit from. Possible values include
+     scaffold views (in which case a default scaffolding view will be
+     used), a custom view name, or NIL. Specific views should inherit
+     from an appropriate scaffold view by default."
+  - fields ::"A list of objects of class 'view-field',
+	   used to describe the fields that the view will render."
+
+** Class FORM-VIEW
+   - default-action :: "A default action that will be called upon
+                       submission of the form if :action isn't
+                       specified in keyword parameters when rendering
+                       the view."
+   - enctype :: "An enctype that will be used upon submission of the
+                form."
+   - persistp :: "Specifies whether the object should be persisted via
+                 'persist-object' on successful deserealization of the
+                 form."
+   - focusp :: "If set to true, renders appropriate JavaScript to
+               focus on the first element of the form once the form is
+               loaded. This slot is set to false by default."
+   - buttons :: "Contains a list of keywords that identify buttons
+                to be rendered - by default contains :submit
+                and :cancel.  Default form view only
+                recognizes :submit and :cancel keywords. Each item of
+                the list may be a cons pair, in which case CAR of the
+                pair should be a keyword, and CDR of the pair should
+                be a string that will be presented to the user via
+                value of the button."
+   - satisfies :: "A function or a list of functions that perform
+                  validation on the entire view (possibly combining
+                  multiple fields.  The function should expect keyword
+                  arguments corresponding to view slot names, each
+                  keyword argument corresponds to one of the parsed
+                  values.  The function should either return t if the
+                  form validates properly, or values nil error-message
+                  if it does not."
+  - instructions :: "Instructions given to the user."
+
+
+** Class VIEW-FIELD
+  - slot-name :: "The name of the slot that this field
+              represents. This value can be null, in which case the
+              field does not correspond to any slot."
+   - reader :: "If this slot is bound to a function object, the
+           function will be called with the object being rendered as
+           argument, and its return value will be used as the value of
+           the field. If this slot is not bound to a function object
+           but another value, the value will be used to render the
+           value of the field as a convinience. If the slot is not
+           bound, 'slot-value' will be used."
+
+** Class INLINE-VIEW-FIELD
+  - label :: "A human readable label that will be used to render the
+          field. By default this value is set to a humanized form of
+          'slot-name'."
+  - presentation :: "A presentation object to be used to render this
+                    field. If not specified, the default presentation for
+                    the type of the view will be used. In addition,
+                    scaffold views will attempt to determine the default
+                    presentation from the value of the slot type, if one
+                    exists."
+
+** Class FORM-VIEW-FIELD-WRITER-MIXIN
+   - writer :: "If this slot is bound to a function object, the
+               function will be called with a new slot value and the
+               object being rendered as arguments. If the slot is not
+               bound, '(setf slot-value)' will be used."
+   - delayed-write-p :: "If this slot is set to t, then the writer
+        will get called after the object has been persisted. This is
+        useful for updating relations, where objects need to be
+        assigned ids and stored before relations can be updated."
+
+** Class FORM-VIEW-FIELD
+  - presentation ::  (make-instance 'input-presentation)
+  - parser :: "A parser object to be used to parse this field from a
+           form. If not specified, the string parser will be used. In
+           addition, scaffold views will attempt to determine the
+           default parser from the value of the slot type, if one
+           exists."
+  - satisfies :: "A predicate, or a list of predicates, that set
+              constraints for parsed values during validation. A
+              predicate may return multiple values, in which case the
+              second value is used as the error message instead of the
+              default one supplied by the parser."
+  - requiredp :: "A predicate which determines whether the field is
+              required."
+  - required-indicator :: "A string, t or nil. When this field is
+                       required, this value is rendered after the
+                       field's label. A value of t will render
+                       *default-required-indicator*."
+  - required-error-msg :: "If this value isn't nil, it is presented to
+                       the user when the field is required and missing
+                       from the input data. Otherwise, the standard
+                       required error message is presented."
+
+* Methods
+ - WITH-VIEW-HEADER
+ - RENDER-VIEW-FELD
+ - RENDER-VIEW-FIELD-VALUE
+ - PRINT-VIEW-FIELD-VALUE
+
+
+
+* Calling
+  - with-view-header
+    - render-validation-summary
+    - render-form-view-buttons
+  - render-view-field
+    - view-field-label
+    - render-view-field-value
+
+* Notions
+Possibly create a view dynamically with one slot for each item in the
+qlist, and intercept the update mechanism via the writer mechanism in
+form-view-field-writer-mixin
+
+View field reader mechanism can be set to a value that will be used
+for the slot
+
+(make-instance 'form-view-field :label blah :reader qlist-item-instance)

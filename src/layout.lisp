@@ -138,10 +138,11 @@
 	       (cons "Edit items" (make-instance 'quantity-list-widget
 						 :qlist bundle
 						 :q-item-delete-p t
+						 :q-item-add-p t
 						 :q-item-render-fn
 						 (lambda (item)
-						   (list (qlist-entry-quantity item)
-							 (title (qlist-entry-item item)))))))))
+						   (list (title (qlist-entry-item item)))))))))
+
 
 
 
